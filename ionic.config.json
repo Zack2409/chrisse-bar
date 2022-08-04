@@ -1,0 +1,7 @@
+{
+  "name": "chrisseBar",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
