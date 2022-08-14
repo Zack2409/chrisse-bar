@@ -4,7 +4,12 @@ const store = createStore({
     state(){
         return{
             drinks: [],
-            sales: []
+            sales: [],
+            grouped: [],
+            chartData: [],
+            dates: [],
+            totals: [],
+            daysData: []
         } 
     },
     mutations: {
@@ -16,11 +21,10 @@ const store = createStore({
         },
         deleteDrink(state,payload){
             state.drinks.splice(payload, 1)
-        },
-        // updateDrink(state,payload){
-            
-        // }
-    }
+        }
+       }
+
+    
 });
 
 export default store;

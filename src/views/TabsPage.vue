@@ -10,12 +10,17 @@
           
         <ion-tab-button tab="tab2" href="/tabs/AllSales">
           <ion-icon :icon="list"></ion-icon>
-          <ion-label>All Sales</ion-label>
+          <ion-label>Sales</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="tab3" href='/tabs/alldrinks'>
+        <ion-tab-button tab="tab3" href='/tabs/AllDrinks'>
           <ion-icon :icon="wine"></ion-icon>
-          <ion-label>All Drinks</ion-label>
+          <ion-label>Drinks</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab4" href='/tabs/AnalyticsPage'>
+          <ion-icon :icon="analytics"></ion-icon>
+          <ion-label>Analytics</ion-label>
         </ion-tab-button>
         
         
@@ -27,7 +32,7 @@
 <script>
 
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { add, list, wine } from 'ionicons/icons';
+import { add, list, wine, analytics } from 'ionicons/icons';
 
 export default ({
   name: 'TabsPage',
@@ -36,7 +41,8 @@ export default ({
     return {
       list,
       add,
-      wine
+      wine,
+      analytics
     }
   }
 });

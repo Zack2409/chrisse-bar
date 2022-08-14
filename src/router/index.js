@@ -25,9 +25,14 @@ const routes = [
         component: () => import('@/views/AllSales.vue')
       },
       {
-        path: '/tabs/alldrinks',
+        path: 'Alldrinks',
         name: 'AllDrinks',
         component: () => import('@/views/AllDrinks.vue')
+      },
+      {
+        path: 'Analyticspage',
+        name: 'AnalyticsPage',
+        component: () => import('@/views/AnalyticsPage.vue')
       }
     ]
   }

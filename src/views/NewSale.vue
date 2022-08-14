@@ -1,19 +1,20 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-title>New Sale</ion-title>
+      <ion-toolbar color="primary">
+        <ion-title>Add a Sale</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      
+
+      <img src="@/assets/beer1.svg"/>
       <div class="container">
        <ion-fab>
       <ion-fab-button id="open-modal" expand="block">
         <ion-icon :icon="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <ion-title class="title">Add a New Sale</ion-title>
+    <!-- <ion-title class="title">Add a New Sale</ion-title> -->
     </div>
     <ion-modal ref="modal" trigger="open-modal">
       <ion-header>
@@ -65,18 +66,15 @@
 </template>
 
 <script>
-
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonModal, IonInput, IonLabel, IonSelect, IonSelectOption, alertController } from '@ionic/vue';
 import { add } from 'ionicons/icons';
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase";
-
-
-
+import moment from 'moment'
+// import havingFun from '@/assets/havingFun.svg'
 export default{
   name: 'Tab1Page',
   components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonModal, IonInput, IonLabel, IonSelect, IonSelectOption},
-
 data(){
   return{
     add,
@@ -113,11 +111,9 @@ data(){
         message: message,
         buttons: ['OK']
       });
-
       await alert.present();
     },
     addSale(){
-
       if (this.drinkName==='' || this.amtShot <= 0){
         this.presentAlert('Please fill in all fields with valid data')
       } else {
@@ -132,18 +128,17 @@ data(){
           minute: '2-digit',
         });
       
-
       addDoc(collection(db, "sales"), {
             name: this.drinkName,
             shotAmt: Number(this.amtShot),
             price: this.currentPrice,
             total: Number(this.amtShot)*this.currentPrice,
             formatedDate: currentDate,
-            date: Date.now()
+            date: Date.now(),
+            justDate: moment(new Date().now).format('l'),
+            justTime: moment(new Date().now).format('LT')
           });
-
       this.presentAlert('Sale Successfully Added!');
-
       this.currentTransaction = {};
       this.drinkName = '';
       this.amtShot = '';
@@ -164,22 +159,46 @@ data(){
 </script>
 
 <style>
-.container{
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+*{
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box;
 }
 
+img{
+  height: 300px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 90px;
+  aspect-ratio:1;
+
+}
+
+.container{
+  display: flex;
+  position: absolute;
+   width: 100vw;
+   /* height: 70vh; */
+  justify-content: center; 
+}
+
+ion-fab{
+  position: fixed;
+  top: 85%;
+  right: 50%;
+  transform: translateX(50%);
+}
 .title{
   position: relative;
   top: 6%;
 }
-
 .successBtn{
   padding-top: 5px;
   }
+
+ /* * ::-webkit-scrollbar{
+  display: none;
+ } */
+
 
 </style>

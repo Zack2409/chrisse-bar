@@ -1,14 +1,13 @@
 <template>
     <ion-page>
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <ion-title slot="start">Show All Drinks</ion-title>
         <ion-icon 
         slot='end' 
         class='addCircle'  
         size="large" 
         :icon="addCircle"
-        expand="block"
          @click="setOpen(true)"
          ></ion-icon>
       </ion-toolbar>
@@ -16,16 +15,25 @@
     <ion-content :fullscreen="true">
       
       <ion-list>
-         <ion-item v-for="drink,index in drinks"
+         <ion-item v-for="(drink,index) in drinks"
          :key="index"
          id="hover-trigger">
              <ion-label>{{ drink.name }}</ion-label>
-             <ion-label>{{ `$${drink.price.toFixed(2)}` }}</ion-label>
+             <ion-label>${{ parseFloat(drink.price).toFixed(2) }}</ion-label>
            <ion-button
             @click="openPopover($event, drink)"
-            fill="clear"><ion-icon size="small" :icon="arrowDown"></ion-icon></ion-button>
+            fill="clear">
+            <!-- <ion-icon size="small" :icon="arrowDown"></ion-icon> -->
+            <!-- <ion-icon :src="moreVert"></ion-icon> -->
+            <FontAwesome icon="fa-info" />
+            </ion-button>
           </ion-item>  
       </ion-list>
+       <ion-fab>
+      <ion-fab-button @click="setOpen(true)">
+        <ion-icon :icon="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
       
       <ion-popover
        :is-open="popoverOpen"
@@ -89,7 +97,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
     IonPopover,
     alertController  } from '@ionic/vue'
 
-import { arrowDown, addCircle, trash, create } from 'ionicons/icons';
+import { arrowDown, add, trash, create, moreVert } from 'ionicons/icons';
 import { db } from "@/firebase";
 import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
  
@@ -112,9 +120,10 @@ export default {
     data(){
         return{
         arrowDown,
-        addCircle,
+        add,
         trash,
         create,
+        moreVert,
         drink: {
             name: '',
             price: ''
@@ -221,8 +230,8 @@ export default {
         padding-left:10px;
     }
 
-    .color{
-        color: white;
+    ion-toolbar{
+      padding-right: 16px;
     }
 
 </style>

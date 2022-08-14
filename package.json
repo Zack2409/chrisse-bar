@@ -17,13 +17,21 @@
     "@capacitor/ios": "3.6.0",
     "@capacitor/keyboard": "1.2.3",
     "@capacitor/status-bar": "1.0.8",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/vue-fontawesome": "^3.0.1",
     "@ionic/vue": "^6.0.0-rc.4",
     "@ionic/vue-router": "^6.0.0",
+    "chart.js": "^3.9.1",
+    "chartjs-plugin-zoom": "^1.2.1",
     "core-js": "^3.6.5",
     "firebase": "^9.9.1",
+    "moment": "^2.29.4",
     "uuid": "^8.3.2",
     "vue": "^3.2.21",
+    "vue-chartjs": "^4.1.1",
     "vue-router": "^4.0.12",
+    "vue-svg-inline-plugin": "^2.2.2",
     "vue-wc-model": "^0.0.3",
     "vuex": "^4.0.2"
   },
@@ -42,7 +50,9 @@
     "eslint": "^8.4.1",
     "eslint-plugin-vue": "^8.2.0",
     "jest": "^27.3.1",
-    "ts-jest": "^27.0.7"
+    "ts-jest": "^27.0.7",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.7.8"
   },
   "description": "An Ionic project"
 }

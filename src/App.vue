@@ -8,6 +8,7 @@
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { db } from "@/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import moment from 'moment'
 
 
 export default({
@@ -24,14 +25,14 @@ export default({
   },
  mounted(){
   const drinksCollection = query(collection(db, "drinks"), orderBy("name"));
-  console.log('mounted');
+  console.log('before mounted');
   onSnapshot(drinksCollection, (querySnapshot) => {
     const drinks = [];
     querySnapshot.forEach((doc) => {
        const drink = {
       id: doc.id,
       name: doc.data().name,
-      price: doc.data().price,
+      price: Number(doc.data().price)
     }
     drinks.push(drink)
     })
@@ -48,15 +49,88 @@ export default({
         shotAmt: doc.data().shotAmt,
         price: Number(doc.data().price),
         total: Number(doc.data().total),
-        date: doc.data().formatedDate
+        date: doc.data().formatedDate,
+        justDate: doc.data().justDate,
+        justTime: doc.data().justTime
       }
         sales.push(sale)
-  });
-    this.$store.state.sales = sales;
-    console.log(this.$store.state.sales)
+
+        });
+          
+          // Getting an object with data grouped by dates
+           let groupedSales = {};
+        groupedSales = sales.reduce((acc, sale) => {
+          if (!acc[sale.justDate]) {
+            acc[sale.justDate] = [];
+          }
+
+          acc[sale.justDate].push(sale);
+
+          return acc;
+        }, {});
+
+          // Changing that object to an array and calculating a total
+          let newStuff = Object.entries(groupedSales);
+          
+          newStuff.forEach(thing => {
+          const total = thing[1].reduce((acc, sale) => (
+              acc += sale.total
+          ), 0);
+          thing.push(total);
+          // console.log(thing)
+          })
+          this.$store.state.grouped = newStuff;
+
+          //Getting sales data for current day
+
+          let analyticsData = newStuff;
+          analyticsData = analyticsData.filter(array => {
+            return moment(array[0]).isSame(new Date(Date.now()).toLocaleString().split(',')[0]);
+           })
+
+           this.$store.state.daysData = analyticsData;
+
+          //Getting data for line graph
+          
+          let chartData=[];
+          let dates = [];
+          let totals=[]
+
+          newStuff.map(stuff => {
+            const data = {
+              date: stuff[0],
+              total: stuff[2]
+            }
+          chartData.push(data)
+          })
+
+          console.log(analyticsData)
+
+          chartData.map(data => {
+            dates.push(data.date);
+            totals.push(data.total)
+          })
+
+          console.log(dates)
+          
+          this.$store.state.dates = dates;
+          this.$store.state.totals = totals;
 
 
-  })
+          
+
+          
+          
+          
+        })
+
  }
   });
 </script>
+
+<style scoped>
+#line-chart{
+  height: 300px !important;
+  width: 300px I !important;
+}
+</style>
