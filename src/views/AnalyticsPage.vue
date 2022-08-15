@@ -16,11 +16,11 @@
       <div class="data-container">
         <div class="data">
           <h6 class="label">Sales</h6>
-          <h6 class="content">{{daysData[0][1].length}}</h6>
+          <h6 class="content">{{daysData[0] ? daysData[0][1].length : '0'}}</h6>
         </div>
         <div class="data">
           <h6 class="label">Amount</h6>
-          <h6 class="content">${{daysData[0][2].toFixed(2)}}</h6>
+          <h6 class="content">${{daysData[0] ? daysData[0][2].toFixed(2) : '0'}}</h6>
         </div>
       </div>
     </div>

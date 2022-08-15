@@ -9,8 +9,8 @@
 
       <img src="@/assets/beer1.svg"/>
       <div class="container">
-       <ion-fab>
-      <ion-fab-button id="open-modal" expand="block">
+       <ion-fab class="md">
+      <ion-fab-button id="open-modal" expand="block" class="md ion-activatable ion-focusable">
         <ion-icon :icon="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
