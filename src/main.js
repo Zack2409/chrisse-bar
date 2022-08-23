@@ -2,6 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import store from '@/store';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -31,22 +34,28 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-// module.exports = {
-//   chainWebpack: (config) => {
-//     const svgRule = config.module.rule('svg');
 
-//     svgRule.uses.clear();
 
-//     svgRule
-//       .use('vue-loader')
-//       .loader('vue-loader') // or `vue-loader-v16` if you are using a preview support of Vue 3 in Vue CLI
-//       .end()
-//       .use('vue-svg-loader')
-//       .loader('vue-svg-loader');
-//   },
-// };
+// firebase
 
-const app = createApp(App)
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHzBSIDCQacrMlXObqOnK1itbnkZT9cCM",
+  authDomain: "chrisee-dddb9.firebaseapp.com",
+  projectId: "chrisee-dddb9",
+  storageBucket: "chrisee-dddb9.appspot.com",
+  messagingSenderId: "309689253807",
+  appId: "1:309689253807:web:af4c12633ffa2b089b795a"
+};
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const db=firebaseApp.firestore();
+
+let app;
+firebase.auth().onAuthStateChanged(() => {
+  if(!app){
+    createApp(App)
   .use(IonicVue)
   .use(router)
   .component('FontAwesome', FontAwesomeIcon)
@@ -57,7 +66,27 @@ const app = createApp(App)
       remove: [ "alt" ]
     }
   })
+  .mount('#app')
+  }
+})
+
+
+// const auth = getAuth(firebaseApp);
+
+// const app = createApp(App)
+//   .use(IonicVue)
+//   .use(router)
+//   .component('FontAwesome', FontAwesomeIcon)
+//   .use(store)
+//   .use(VueSvgInlinePlugin, {
+//     attributes: {
+//       data: [ "src" ],
+//       remove: [ "alt" ]
+//     }
+//   })
   
-router.isReady().then(() => {
-  app.mount('#app');
-});
+// router.isReady().then(() => {
+//   app.mount('#app');
+// });
+
+export { timestamp, db };

@@ -9,6 +9,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { db } from "@/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import moment from 'moment'
+import firebase from "firebase/compat/app";
+import "firebase/auth";
 
 
 export default({
@@ -23,7 +25,19 @@ export default({
       price: '4'
     }
   },
+  async created(){
+    setTimeout(() => {
+      console.log(firebase.auth().currentUser)
+    }, 2000)
+    // const user = await firebase.auth().currentUser;
+    // if (!user){
+    //   this.$router.push({ name: "LoginPage" })
+    // }else{
+    //     return;
+    // }
+  },
  mounted(){
+
   const drinksCollection = query(collection(db, "drinks"), orderBy("name"));
   console.log('before mounted');
   onSnapshot(drinksCollection, (querySnapshot) => {
@@ -104,23 +118,21 @@ export default({
           chartData.push(data)
           })
 
-          console.log(analyticsData)
+         
 
           chartData.map(data => {
-            dates.push(data.date);
-            totals.push(data.total)
+            const sevenDays = moment().subtract(7, 'days');
+            if(moment(data.date).isAfter(sevenDays)){
+              dates.push(data.date);
+              totals.push(data.total)
+            }
           })
 
-          console.log(dates)
+          // console.log(dates)
           
           this.$store.state.dates = dates;
           this.$store.state.totals = totals;
 
-
-          
-
-          
-          
           
         })
 

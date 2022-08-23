@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import TabsPage from '../views/TabsPage.vue'
+import firebase from "firebase/compat/app";
+import "firebase/auth";
 
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/NewSale'
+    redirect: '/tabs/LoginPage'
   },
   {
     path: '/tabs/',
@@ -12,7 +14,7 @@ const routes = [
     children: [
       {
         path: '',
-        redirect: '/tabs/NewSale'
+        redirect: '/tabs/LoginPage'
       },
       {
         path: 'NewSale',
@@ -33,6 +35,11 @@ const routes = [
         path: 'Analyticspage',
         name: 'AnalyticsPage',
         component: () => import('@/views/AnalyticsPage.vue')
+      },
+      {
+        path: 'LoginPage',
+        name: 'LoginPage',
+        component: () => import('@/views/LoginPage.vue')
       }
     ]
   }
@@ -41,6 +48,13 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+ router.beforeEach(async (to) => {
+  let user = await firebase.auth().currentUser;
+  if (!user && to.name !== 'LoginPage') {
+    return { name: 'LoginPage'};
+  }return;
 })
 
 export default router

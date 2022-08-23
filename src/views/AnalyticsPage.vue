@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-    <h6>Line Chart Showing Past Weeks Sales</h6>
+    <h6>Line Chart Showing Sales for Last 7 Days</h6>
    <div id="chart-wrapper">
     <LineChart />
    </div>
@@ -101,6 +101,7 @@ justify-content: space-evenly;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0!important;
 }
 

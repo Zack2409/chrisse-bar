@@ -9,7 +9,8 @@ const store = createStore({
             chartData: [],
             dates: [],
             totals: [],
-            daysData: []
+            daysData: [],
+            login: true
         } 
     },
     mutations: {

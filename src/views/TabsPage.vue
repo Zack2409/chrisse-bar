@@ -26,6 +26,8 @@
         
       </ion-tab-bar>
     </ion-tabs>
+
+
   </ion-page>
 </template>
 
@@ -42,8 +44,19 @@ export default ({
       list,
       add,
       wine,
-      analytics
+      analytics,
+      loginPage: false
+    }
+  },
+  computed: {
+    Login(){
+      return this.$store.state.login
     }
   }
 });
 </script>
+
+<style>
+
+
+</style>
