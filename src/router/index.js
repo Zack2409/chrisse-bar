@@ -50,11 +50,14 @@ const router = createRouter({
   routes
 })
 
- router.beforeEach(async (to) => {
+ router.beforeEach(async (to, from, next) => {
   let user = await firebase.auth().currentUser;
   if (!user && to.name !== 'LoginPage') {
-    return { name: 'LoginPage'};
-  }return;
+     next({ name: 'LoginPage'});
+  }else if(user && to.name === 'LoginPage'){
+    next({ name: 'NewSale' })
+  }
+  else next();
 })
 
 export default router

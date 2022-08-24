@@ -26,9 +26,9 @@ export default({
     }
   },
   async created(){
-    setTimeout(() => {
+    
       console.log(firebase.auth().currentUser)
-    }, 2000)
+    
     // const user = await firebase.auth().currentUser;
     // if (!user){
     //   this.$router.push({ name: "LoginPage" })

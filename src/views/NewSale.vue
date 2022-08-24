@@ -15,7 +15,7 @@
       </ion-fab-button>
     </ion-fab>
 
-    <!-- <ion-button @click="signOut()">SignOut</ion-button> -->
+    <ion-button @click="signOut()">SignOut</ion-button>
     <!-- <ion-title class="title">Add a New Sale</ion-title> -->
     </div>
     <ion-modal ref="modal" trigger="open-modal">
@@ -73,7 +73,7 @@ import { add } from 'ionicons/icons';
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase";
 import moment from 'moment'
-// import firebase from "firebase/compat/app";
+import firebase from "firebase/compat/app";
 import "firebase/auth";
 // import havingFun from '@/assets/havingFun.svg'
 export default{
@@ -155,13 +155,14 @@ data(){
       this.currentPrice = '';
       }
       },
-      // signOut(){
-      //   firebase.auth().signOut().then(() => {
-      //     console.log('logged out')
-      //     this.$router.push({ name: "LoginPage" })
-      //   })
+      signOut(){
+        firebase.auth().signOut().then(() => {
+          console.log('logged out')
+
+          this.$router.go()
+        })
         
-      // }
+      }
     },
     computed: {
       drinks(){
